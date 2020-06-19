@@ -20,7 +20,7 @@ end_year=
 ##PICOC terms. The terms has to be separated by "|".
 ##PICOC terms are those you want to be found in the papers title, abstract, or keywords.
 #ex:
-#population=teste|testing this|other test
+#population=test|testing this|other test
 #intervention=abc|def|ghi
 #...
 #
