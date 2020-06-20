@@ -1,5 +1,12 @@
-#Condfig files
+#Local files
 config.ini
+result.csv
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
