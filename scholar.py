@@ -113,7 +113,7 @@ def parser(soup, page, year):
                     paper['Related list'] = url + a['href']
                 if a.text.startswith('Import'):
                     paper['Bibtex'] = requests.get(a['href']).text
-                    print(paper['Bibtex'])
+                    
         papers.append(paper)
         # Wait 20 seconds until the next request to google
         time.sleep(20)
