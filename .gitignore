@@ -1,6 +1,7 @@
 #Local files
 config.ini
-result.csv
+*.csv
+*.bib
 
 # IntelliJ project files
 .idea
