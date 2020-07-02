@@ -1,3 +1,5 @@
+import csv
+
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -110,9 +112,11 @@ def parser(soup, page, year):
                 if a.text.startswith('Related'):
                     paper['Related list'] = url + a['href']
                 if a.text.startswith('Import'):
-                    paper['Bibtex'] = a['href']
-
+                    paper['Bibtex'] = requests.get(a['href']).text
+                    print(paper['Bibtex'])
         papers.append(paper)
+        # Wait 20 seconds until the next request to google
+        time.sleep(20)
 
     return papers, len(html)
 
@@ -120,10 +124,16 @@ def parser(soup, page, year):
 if __name__ == '__main__':
     query = config['search']['query']
     year = int(config['search']['start_year'])
+    output = config['default']['result_path']
 
     logging.info("Starting...")
+    logging.info("Result path: {}".format(output))
     logging.info("PICOC terms are: {}".format(picoc))
     logging.info("Search query is: {}".format(query))
+
+    with open(output, 'a', newline='') as outcsv:
+        csv.writer(outcsv).writerow(['Link', 'Additional link', 'Title', 'Authors', 'Abstract', 'Cited by',
+                                     'Cited list', 'Related list', 'Bibtex', 'Year', 'Google page'])
 
     # String search year by year.
     while year <= int(config['search']['end_year']):
@@ -135,7 +145,7 @@ if __name__ == '__main__':
             art, t = parser(BeautifulSoup(driver.page_source, 'lxml'), page, year)
             total += t
             df = pd.DataFrame(art)
-            df.to_csv('result.csv', mode='a', header=False, index=False)
+            df.to_csv(output, mode='a', header=False, index=False)
             try:
                 driver.find_element_by_class_name("gs_ico_nav_next").click()
                 check_captcha()
@@ -144,8 +154,8 @@ if __name__ == '__main__':
                 logging.info(
                     "No more pages for {} year, total of {} pages and {} articles processed".format(year, page, total))
                 year += 1
-                # Wait 5 seconds until the next page request
-                time.sleep(5)
+                # Wait 10 seconds until the next page request
+                time.sleep(10)
                 break
 
     logging.info("Ending...")
