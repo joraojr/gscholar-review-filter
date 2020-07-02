@@ -3,9 +3,8 @@
 This project was made to help researchers in the literature review process using Google Scholar. Unlike other papers repositories, Google Scholar does not have an option to filter results by title, abstract, or keywords. Thus, the queries made return a huge amount of papers, which makes it impossible to analyze all returned papers. Because of this, this project presents a solution for the automatic search of articles and filtering of TITLE-ABS-KEY using the PICOC methodology terms.
 
 
-## How to use
 
-### Requirements
+## Requirements
 To run this project you will need:
 
 * Python 3
@@ -14,6 +13,8 @@ To run this project you will need:
 Then clone the repository and run:
 
 * ``pip install -r requirements.txt``
+
+## How to use
 
 ### Configuration
 
@@ -24,7 +25,7 @@ Copy or rename the ``config.ex.ini`` to ``config.ini`` and set up the config fil
 * **start_year** and **end_year**: This script searches for papers year by year because Google Scholar only allows 1000 of paper by query.
 * **picoc** : The terms are those you want to be found in the papers title, abstract, or keywords. The terms have to be separated by "|".
 
-## To run
+### To run
 
 After the configuration, run the following code:
 
