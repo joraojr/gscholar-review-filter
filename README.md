@@ -34,7 +34,7 @@ The selenium will open a new Google Chrome tab and perform the search by itself.
 
 ## Monitoring
 
-Sometimes a Captcha shows up. It needs to be fixed manually. When it occurs, the following message will pop up on the terminal:
+Sometimes a Captcha shows up on the browser. It needs to be fixed manually. When it occurs, the following message will pop up on the terminal:
 
 * ``Captcha found! You need to fill it on browser to continue. Go to the terminal and type 'y' when the Captcha be solved``
 
