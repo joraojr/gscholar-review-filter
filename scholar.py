@@ -1,6 +1,8 @@
 import csv
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
@@ -24,7 +26,13 @@ picoc = {
 }
 
 # Create a new Chorme session
-driver = webdriver.Chrome(config['default']['chromedriver'])
+
+options = None
+if config['default']['binary_location']:
+    options = Options()
+    options.binary_location = config['default']['binary_location']
+
+driver = webdriver.Chrome(config['default']['chromedriver'],options=options)
 url = "https://scholar.google.com/"
 driver.get(url)
 
@@ -63,7 +71,7 @@ def check_captcha():
 # Filter the PICOC terms inside the Title-Abstract-Keywords
 def filterTitleAbsKey(site):
     try:
-        page = requests.get(site)
+        page = requests.get(site,timeout=600)
         text = BeautifulSoup(page.text, 'lxml').get_text()
         text = str.lower(text)
         for terms in filter(None, picoc.values()):
@@ -72,6 +80,8 @@ def filterTitleAbsKey(site):
                 return False
         logging.info("%s passed on title-abs-key filter", site)
         return True
+    except requests.exceptions.Timeout:
+        logging.info("[TIMEOUT] Timeout on %s and not passed on title-abs-key filter. Skipping website", site)
     except:
         logging.info("[ERROR] on %s and not passed on title-abs-key filter", site)
     return False
