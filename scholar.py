@@ -37,6 +37,7 @@ url = "https://scholar.google.com/"
 driver.get(url)
 
 # Setting Google Scholar
+driver.maximize_window()
 driver.find_element_by_id("gs_hdr_mnu").click()
 driver.find_element_by_class_name("gs_btnP").click()
 driver.find_element_by_id("gs_num-b").click()
